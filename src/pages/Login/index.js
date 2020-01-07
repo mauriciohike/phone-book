@@ -1,9 +1,9 @@
 import React from 'react';
 
-// import { Container } from './styles';
+ import { Title } from './styles';
 
 export default function Login() {
   return (
-    <h1>Login</h1>
+    <Title>Login</Title>
   );
 }
