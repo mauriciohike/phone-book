@@ -2,13 +2,16 @@ import React from 'react';
 import Routes from './router';
 
 import GlobalStyle from './styles/global';
+import UserContextProvider from './contexts/UserContext';
 
 function App() {
   return (
     <div className="App">
       <>
-        <GlobalStyle/>
-        <Routes/>
+        <UserContextProvider>
+          <GlobalStyle/>
+          <Routes/>
+        </UserContextProvider>
       </>
     </div>
   );
