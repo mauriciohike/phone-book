@@ -5,20 +5,17 @@ import { UserContext } from '../../contexts/UserContext';
 
 export default class Home extends Component {
 
-  static contextType = UserContext;
-
-  // componentDidMount(){
-  //   !this.context.isLoggedIn && this.props.history.push('/login/')
-  // }
-
   render() {
-
-    const { isLoggedIn } = this.context;
-
     return (
-      
-      <h1>{ isLoggedIn ? 'Você está logado!' : 'Logue agora =)' }</h1>
+      <UserContext.Consumer>{(context) =>{
 
+          const { isLoggedIn } = context;
+
+          return(
+            <h1>{ isLoggedIn ? 'Você está logado!' : 'Logue agora =)' }</h1>
+          );
+
+        }}</UserContext.Consumer>
     );
   }
 }
