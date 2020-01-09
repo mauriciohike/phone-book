@@ -1,30 +1,66 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { UserContext } from '../../contexts/UserContext';
-
-import { Title } from './styles';
+import { toast } from 'react-toastify';
+import { UserListContext } from '../../contexts/UserListContext';
 
 
 const Login = ({ history }) => {
 
-  const { user, dispatch } = useContext(UserContext)
+  const { dispatch } = useContext(UserContext);
+  const { userList } = useContext(UserListContext);
 
-  const authUser = () =>{
-    dispatch({
-      type: 'SET_USER',
-      user: {
-        name: 'Mauricio'
+  const [ email, setEmail] = useState('');
+  const [ password, setPassword ] = useState('');
+
+  const handleSubmit = (e) =>{
+
+    e.preventDefault();
+
+    if(email && password){
+
+      const userExist = userList.find(user =>{
+        return user.email === email && user.password === password;
+      });
+
+      if(userExist){
+        dispatch({
+          type: 'SET_USER',
+          user: userExist
+        });
+        redirect('/', 0);
+      }else{
+        toast.error('Não encontrado!');
       }
-    })
+
+    }else{
+      toast.warn('Preencha todas as infos!');
+    }
+  
   }
 
-  useEffect(() =>{
+  const redirect = (path, time) =>{
     setTimeout(() =>{
-      user.name && history.push('/')
-    }, 1500)
-  });
+      history.push(path)
+    }, time)
+  }
 
   return (
-    <Title onClick={authUser}>Login</Title>
+    <form onSubmit={handleSubmit}>
+      <input 
+        type="email"
+        value={email}
+        name="email" 
+        onChange={(e) => setEmail(e.target.value)}
+        />
+
+      <input 
+        type="password"
+        name="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        />
+      <input type="submit" value="Login"/>
+    </form>
   );
 }
 

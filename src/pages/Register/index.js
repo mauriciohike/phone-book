@@ -36,7 +36,7 @@ const Register = ({history}) => {
         resetForm();
       }
     }else{
-      toast.warn('Preencha todas as infos!')
+      toast.warn('Preencha todas as infos!');
     }
   }
 
