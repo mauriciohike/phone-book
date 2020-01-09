@@ -1,4 +1,5 @@
 import React, { createContext, useState} from 'react';
+import uuid from 'uuid/v1';
 
 export const UserListContext = createContext();
 
@@ -14,12 +15,12 @@ const UserListContextProvider = (props) =>{
     ]);
 
     const addUser = (name, email, password) =>{
-        setUserList([...userList, {name, email, password}])
+        setUserList([...userList, {id: uuid(), name, email, password}])
     }
 
     return(
-        <UserListContext.Provider value={{userList}}>
-            {props.children}
+        <UserListContext.Provider value={{userList, addUser}}>
+            { props.children }
         </UserListContext.Provider>
     )
 }
