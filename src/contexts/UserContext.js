@@ -5,7 +5,7 @@ export const UserContext = createContext();
 export default class UserContextProvider extends Component {
 
     state = {
-        isLoggedIn: true
+        isLoggedIn: false
     }
 
   render() {
