@@ -1,9 +1,31 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { UserContext } from '../../contexts/UserContext';
 
- import { Title } from './styles';
+import { Title } from './styles';
 
-export default function Login() {
+
+const Login = ({ history }) => {
+
+  const { user, dispatch } = useContext(UserContext)
+
+  const authUser = () =>{
+    dispatch({
+      type: 'SET_USER',
+      user: {
+        name: 'Mauricio'
+      }
+    })
+  }
+
+  useEffect(() =>{
+    setTimeout(() =>{
+      user.name && history.push('/')
+    }, 1500)
+  });
+
   return (
-    <Title>Login</Title>
+    <Title onClick={authUser}>Login</Title>
   );
 }
+
+export default Login;
