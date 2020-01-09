@@ -4,7 +4,7 @@ export const UserListContext = createContext();
 
 const UserListContextProvider = (props) =>{
 
-    const [userList] = useState([
+    const [userList, setUserList] = useState([
         { 
             id: 1, 
             name: 'Mauricio',
@@ -12,6 +12,10 @@ const UserListContextProvider = (props) =>{
             password: '1234'
         }
     ]);
+
+    const addUser = (name, email, password) =>{
+        setUserList([...userList, {name, email, password}])
+    }
 
     return(
         <UserListContext.Provider value={{userList}}>
