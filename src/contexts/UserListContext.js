@@ -1,25 +1,21 @@
-import React, { createContext, useState} from 'react';
-import uuid from 'uuid/v1';
+import React, { createContext, useReducer} from 'react';
+import { userListReducer } from '../reducers/userListReducer';
 
 export const UserListContext = createContext();
 
 const UserListContextProvider = (props) =>{
 
-    const [userList, setUserList] = useState([
-        { 
-            id: 1, 
-            name: 'Mauricio',
-            email: 'mauriciorenanvs@gmail.com' ,
-            password: '1234'
-        }
+    const [userList, dispatch] = useReducer(userListReducer, [
+        {
+            id: 1,
+            name: 'Admin',
+            email: 'admin@admin',
+            password: 'Admin'
+         }
     ]);
 
-    const addUser = (name, email, password) =>{
-        setUserList([...userList, {id: uuid(), name, email, password}])
-    }
-
     return(
-        <UserListContext.Provider value={{userList, addUser}}>
+        <UserListContext.Provider value={{userList, dispatch}}>
             { props.children }
         </UserListContext.Provider>
     )
