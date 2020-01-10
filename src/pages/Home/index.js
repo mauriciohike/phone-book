@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { ContactContext } from '../../contexts/ContactContext';
 
@@ -8,19 +8,59 @@ import { toast } from 'react-toastify';
 const Home = () => {
 
   const { user } = useContext(UserContext);
-  const { contactList } = useContext(ContactContext);
+  const { contactList, dispatch } = useContext(ContactContext);
 
   const [ name, setName ] = useState('');
   const [ email, setEmail] = useState('');
   const [ phone, setPhone ] = useState('');
   const [ type, setType ] = useState('');
 
+  const handleSubmit = (e) =>{
+
+    e.preventDefault();
+
+    if(name && email && phone){
+
+      const contactExist = contactList.find(contact => contact.phone === phone);
+
+      if(!contactExist){
+        dispatch({
+          type: 'ADD_CONTACT',
+          contact: {id: uuid(), name, email, phone, type: type ? 'public' : 'private'}
+        });
+        toast.success('Cadastrado com sucesso!');
+
+        resetForm();
+
+      }else{
+        toast.error('Contato já cadastrado');
+
+        resetForm();
+      }
+    }else{
+      toast.warn('Preencha todas as infos!');
+    }
+  }
+
+  const resetForm = () =>{
+    setName('');
+    setEmail('');
+    setPhone('');
+    setType('');
+  }
+
+  const deleteContact = (id) =>{
+    dispatch({
+      type: 'REMOVE_CONTACT',
+      id
+    });
+  }
 
   return (
     <>
       <h1>{ user.name ? `Olá ${user.name}` : 'Logue agora =)' }</h1>
 
-      <form action="#">
+      <form onSubmit={handleSubmit}>
 
         <input 
           type="text" 
@@ -46,8 +86,8 @@ const Home = () => {
         <input 
           type="checkbox" 
           name="Type"
-          value={type} 
-          onChange={(e) => setType(e.target.value)}
+          checked={type} 
+          onChange={(e) => setType(e.target.checked)}
         />
 
         <input type="submit" value="Adicionar"/>
@@ -56,11 +96,11 @@ const Home = () => {
       <ul>
         {contactList.map(contact =>{
           return(
-            <>
-              <li>{contact.name}</li>
-              <li>{contact.email}</li>
-              <li>{contact.phone}</li>
-            </>
+            <li key={contact.id} onClick={() => { deleteContact(contact.id) }}>
+              <p>{contact.name}</p>
+              <p>{contact.email}</p>
+              <p>{contact.phone}</p>
+            </li>
           );
         })}
       </ul>

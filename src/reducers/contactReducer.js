@@ -1,7 +1,7 @@
 export const contactReducer = (state, action) =>{
   switch(action.type){
     case 'ADD_CONTACT':
-      const {id, name, email, phone, type} = action.user;
+      const {id, name, email, phone, type} = action.contact;
       return [...state, {
           id,
           name,
@@ -11,7 +11,7 @@ export const contactReducer = (state, action) =>{
       }];
 
     case 'REMOVE_CONTACT':
-      return state.map(contact => contact.id !== action.id)
+      return state.filter(contact => contact.id !== action.id)
     
     default:
         return state
