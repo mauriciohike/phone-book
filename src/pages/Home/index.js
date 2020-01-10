@@ -22,86 +22,61 @@ const Home = () => {
     e.preventDefault();
 
     if(name && email && phone){
-
       const contactExist = contactList.find(contact => contact.phone === phone);
 
       if(!contactExist){
+
         dispatch({
           type: 'ADD_CONTACT',
           contact: {id: uuid(), name, email, phone, type: type ? 'public' : 'private'}
         });
+
         toast.success('Cadastrado com sucesso!');
-
         resetForm();
-
       }else{
         toast.error('Contato já cadastrado');
-
         resetForm();
       }
     }else{
       toast.warn('Preencha todas as infos!');
     }
-  }
+  };
 
   const resetForm = () =>{
-    setName('');
-    setEmail('');
-    setPhone('');
-    setType('');
-  }
+    setName(''); setEmail(''); setPhone(''); setType('');
+  };
 
   const deleteContact = (id) =>{
     dispatch({
-      type: 'REMOVE_CONTACT',
-      id
+      type: 'REMOVE_CONTACT', id
     });
-  }
+  };
 
   useEffect(() =>{
     if(user.name){
       setContactsView(contactList);
-      console.log('carai borracha 1')
     }else{
-      setContactsView(contactList.filter(contact => contact.type === 'public'))
-      console.log('carai borracha 2')
+      setContactsView(contactList.filter(contact => contact.type === 'public'));
     }
-  }, [])
+  }, [user.name, contactList]);
 
   return (
     <>
       <h1>{ user.name ? `Olá ${user.name}` : 'Logue agora =)' }</h1>
 
       <form onSubmit={handleSubmit}>
-
         <input 
-          type="text" 
-          name="Name"
-          value={name} 
-          onChange={(e) => setName(e.target.value)}
+          type="text" name="Name"value={name} onChange={(e) => setName(e.target.value)}
         />
-
         <input 
-          type="email" 
-          name="Email"
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)}
+          type="email" name="Email"value={email} onChange={(e) => setEmail(e.target.value)}
         />
-
         <input 
-          type="tel" 
-          name="Phone"
-          value={phone} 
-          onChange={(e) => setPhone(e.target.value)}
+          type="tel" name="Phone"value={phone} onChange={(e) => setPhone(e.target.value)}
         />
-
         <input 
-          type="checkbox" 
-          name="Type"
-          checked={type} 
-          onChange={(e) => setType(e.target.checked)}
+          type="checkbox" name="Type"checked={type} onChange={(e) => setType(e.target.checked)}
         />
-
         <input type="submit" value="Adicionar"/>
       </form>
 
