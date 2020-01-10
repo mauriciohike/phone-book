@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { ContactContext } from '../../contexts/ContactContext';
 
@@ -14,6 +14,8 @@ const Home = () => {
   const [ email, setEmail] = useState('');
   const [ phone, setPhone ] = useState('');
   const [ type, setType ] = useState('');
+
+  const [ contactsView, setContactsView ] = useState('');
 
   const handleSubmit = (e) =>{
 
@@ -56,6 +58,16 @@ const Home = () => {
     });
   }
 
+  useEffect(() =>{
+    if(user.name){
+      setContactsView(contactList);
+      console.log('carai borracha 1')
+    }else{
+      setContactsView(contactList.filter(contact => contact.type === 'public'))
+      console.log('carai borracha 2')
+    }
+  }, [])
+
   return (
     <>
       <h1>{ user.name ? `Olá ${user.name}` : 'Logue agora =)' }</h1>
@@ -94,7 +106,7 @@ const Home = () => {
       </form>
 
       <ul>
-        {contactList.map(contact =>{
+        {contactsView && contactsView.map(contact =>{
           return(
             <li key={contact.id} onClick={() => { deleteContact(contact.id) }}>
               <p>{contact.name}</p>
