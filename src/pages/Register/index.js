@@ -1,8 +1,17 @@
 import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import { UserListContext } from '../../contexts/UserListContext';
 
 import uuid from 'uuid';
 import { toast } from 'react-toastify';
+
+import ContainerOutside from '../../layouts/ContainerOutside';
+import InputGroup from '../../components/InputGroup';
+import PrincipalTitle from '../../components/PrincipalTitle';
+import Button from '../../components/Button';
+
+import { CallToPage } from './styles';
 
 
 const Register = ({history}) => {
@@ -53,31 +62,65 @@ const Register = ({history}) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <ContainerOutside>
 
-      <input 
-        type="text" 
-        name="name" 
-        value={name} 
-        onChange={(e) => setName(e.target.value)}
-        />
+      <PrincipalTitle>
+        Organizar os <span>contatos</span> nunca foi tão fácil!
+      </PrincipalTitle>
 
-      <input 
-        type="email"
-        value={email}
-        name="email" 
-        onChange={(e) => setEmail(e.target.value)}
-        />
+      <form onSubmit={handleSubmit}>
 
-      <input 
-        type="password"
-        name="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        />
-      <input type="submit" value="Registrar"/>
+      <InputGroup>
+        <label for="name">
+            Nome:
+          </label>
+        <input 
+          type="text" 
+          name="name" 
+          value={name}
+          id="name"
+          onChange={(e) => setName(e.target.value)}
+          />
+        </InputGroup>
 
-    </form>
+      <InputGroup>
+        <label for="email">
+            E-mail:
+        </label>
+        <input 
+          type="email"
+          value={email}
+          name="email"
+          id="email" 
+          onChange={(e) => setEmail(e.target.value)}
+          />
+        </InputGroup>
+
+      <InputGroup>
+        <label for="email">
+          Senha:
+        </label>
+        <input 
+          type="password"
+          name="password"
+          value={password}
+          id="password"
+          onChange={(e) => setPassword(e.target.value)}
+          />
+      </InputGroup>
+
+        <Button>
+          <input type="submit" value="Registrar"/>
+        </Button>
+        
+      </form>
+      <CallToPage>
+            Já possui cadastro?
+            <Link to="/login">
+              <span> entre aqui!</span>
+            </Link>
+          </CallToPage>
+    </ContainerOutside>
   );
 }
 

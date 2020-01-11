@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 
-export const Title = styled.h1`
-  font-size: 112px;
-  color: black;
+export const CallToPage = styled.span`
+  display: block;
+  font-weight: bold;
+  margin-top: 20px;
+
+  span{
+    color: #FF8214;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
