@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { ContactContext } from '../../contexts/ContactContext';
+import { FaTimes } from 'react-icons/fa';
 
-import { Item } from './styles';
+import { Item, DeleteContact } from './styles';
 
 const Contact = (props) => {
 
@@ -16,7 +17,11 @@ const Contact = (props) => {
   const {id, name, email, phone} = props;
 
   return (
-    <Item key={id} onClick={() => { deleteContact(id) }}>
+    <Item key={id}>
+        <DeleteContact onClick={() => { deleteContact(id) }}>
+         <FaTimes/>
+        </DeleteContact>
+          
         <p>{name}</p>
         <p className="colored">{email}</p>
         <p>{phone}</p>
