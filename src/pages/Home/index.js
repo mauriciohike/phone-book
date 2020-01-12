@@ -85,7 +85,12 @@ const Home = () => {
           <PrincipalTitle> Olá <span>{user.name}</span>,</PrincipalTitle>
 
           <AddContact>
-            <h2>Aqui estão os seus <span>contatos</span>:</h2>
+            {contactsView.length > 0 ?
+              <h2>Aqui estão os seus <span>contatos</span>:</h2>
+              :
+              <h2>Adicione um <span>contato</span> agora:</h2>
+            }
+            
 
             <Button>
                 <span onClick={toggleModal}>Novo</span>
@@ -105,9 +110,11 @@ const Home = () => {
             </h2>
           </CallLogin>
 
-          <AddContact>
-            <h2>Aqui estão os <span>contatos públicos</span>:</h2>
-          </AddContact>
+          { contactsView.length > 0 &&
+            <AddContact>
+              <h2>Aqui estão os <span>contatos públicos</span>:</h2>
+            </AddContact>
+          }
         </>
       }
       
