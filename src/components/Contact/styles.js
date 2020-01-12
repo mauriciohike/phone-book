@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-export const Item = styled.div`
+export const Item = styled.article`
+  position: relative;
   width: 290px;
   margin: 15px 25px;
   padding: 20px 0 20px 15px;
@@ -15,4 +16,11 @@ export const Item = styled.div`
   p.colored{
     color: #FF8214;
   }
+`;
+
+export const DeleteContact = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
 `;

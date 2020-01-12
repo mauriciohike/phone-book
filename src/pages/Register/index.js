@@ -36,8 +36,7 @@ const Register = ({history}) => {
           user: {id: uuid(), name, email, password}
         });
         toast.success('Cadastrado com sucesso!');
-
-        resetForm();
+        
         redirect();
 
       }else{
