@@ -18,7 +18,8 @@ export const Wrapper = styled.div`
     }
 
     @media (max-width: 760px){
-      width: 170px;
+      width: 150px;
+      font-size: 18px;
     }
   }
 `;

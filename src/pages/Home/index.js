@@ -16,7 +16,9 @@ import Contact from '../../components/Contact';
 import Modal from '../../components/Modal';
 import InputGroup from '../../components/InputGroup';
 
-import { AddContact, PublicContactInput } from './styles';
+import { FaTimes } from 'react-icons/fa';
+
+import { AddContact, PublicContactInput, CloseModal, CallLogin } from './styles';
 
 const Home = () => {
 
@@ -28,7 +30,9 @@ const Home = () => {
   const [ phone, setPhone ] = useState('');
   const [ type, setType ] = useState('');
 
-  const [ contactsView, setContactsView ] = useState('');
+  const [ modal, setModal ] = useState(false);
+
+  const [ contactsView, setContactsView ] = useState([]);
 
   const handleSubmit = (e) =>{
 
@@ -45,6 +49,7 @@ const Home = () => {
         });
 
         toast.success('Cadastrado com sucesso!');
+        toggleModal();
         resetForm();
       }else{
         toast.error('Contato já cadastrado');
@@ -58,6 +63,10 @@ const Home = () => {
   const resetForm = () =>{
     setName(''); setEmail(''); setPhone(''); setType('');
   };
+
+  const toggleModal = () =>{
+    setModal(!modal)
+  }
 
   useEffect(() =>{
     if(user.name){
@@ -74,22 +83,40 @@ const Home = () => {
         <>
           <PrincipalTitle> Olá <span>{user.name}</span>,</PrincipalTitle>
 
-            <AddContact>
+          <AddContact>
             <h2>Aqui estão os seus <span>contatos</span>:</h2>
 
             <Button>
-                <span>Novo</span>
+                <span onClick={toggleModal}>Novo</span>
             </Button>
           </AddContact>
 
         </>
 
-
         :
-        <PrincipalTitle>Olá,</PrincipalTitle>
+        <>
+          <PrincipalTitle>Olá,</PrincipalTitle>
+
+          <CallLogin>
+            <h2>
+              Quer realizar cadastros e visualizar contatos privados? 
+              <Link to="/login"><span>Entre agora</span></Link>  ;)
+            </h2>
+          </CallLogin>
+
+          <AddContact>
+            <h2>Aqui estão os <span>contatos públicos</span>:</h2>
+          </AddContact>
+        </>
       }
       
+      {modal &&
       <Modal>
+
+        <CloseModal onClick={toggleModal}>
+          <FaTimes/>
+        </CloseModal>
+
         <form onSubmit={handleSubmit}>
             <InputGroup>
               <label for="name">
@@ -118,10 +145,10 @@ const Home = () => {
               />
             </InputGroup>
 
-<PublicContactInput>
-            <input 
-              type="checkbox" name="Type"checked={type} onChange={(e) => setType(e.target.checked)}
-            />
+            <PublicContactInput>
+              <input 
+                type="checkbox" name="Type"checked={type} onChange={(e) => setType    (e.target.checked)}
+              />
             <span>O contato é público</span>
             </PublicContactInput>
 
@@ -130,7 +157,7 @@ const Home = () => {
             </Button>
             
           </form>
-      </Modal>
+      </Modal>}
 
       <ContactsContainer>
         {contactsView && contactsView.map(contact =>{
