@@ -1,9 +1,22 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import { UserContext } from '../../contexts/UserContext';
 import { ContactContext } from '../../contexts/ContactContext';
-
+ 
 import uuid from 'uuid';
 import { toast } from 'react-toastify';
+
+import ContainerInside from '../../layouts/ContainerInside';
+
+import PrincipalTitle from '../../components/PrincipalTitle';
+import Button from '../../components/Button';
+import ContactsContainer from '../../components/ContactsContainer';
+import Contact from '../../components/Contact';
+import Modal from '../../components/Modal';
+import InputGroup from '../../components/InputGroup';
+
+import { AddContact, PublicContactInput } from './styles';
 
 const Home = () => {
 
@@ -46,12 +59,6 @@ const Home = () => {
     setName(''); setEmail(''); setPhone(''); setType('');
   };
 
-  const deleteContact = (id) =>{
-    dispatch({
-      type: 'REMOVE_CONTACT', id
-    });
-  };
-
   useEffect(() =>{
     if(user.name){
       setContactsView(contactList);
@@ -61,37 +68,84 @@ const Home = () => {
   }, [user.name, contactList]);
 
   return (
-    <>
-      <h1>{ user.name ? `Olá ${user.name}` : 'Logue agora =)' }</h1>
+    <ContainerInside>
+      {user.name ?
 
-      <form onSubmit={handleSubmit}>
-        <input 
-          type="text" name="Name"value={name} onChange={(e) => setName(e.target.value)}
-        />
-        <input 
-          type="email" name="Email"value={email} onChange={(e) => setEmail(e.target.value)}
-        />
-        <input 
-          type="tel" name="Phone"value={phone} onChange={(e) => setPhone(e.target.value)}
-        />
-        <input 
-          type="checkbox" name="Type"checked={type} onChange={(e) => setType(e.target.checked)}
-        />
-        <input type="submit" value="Adicionar"/>
-      </form>
+        <>
+          <PrincipalTitle> Olá <span>{user.name}</span>,</PrincipalTitle>
 
-      <ul>
+            <AddContact>
+            <h2>Aqui estão os seus <span>contatos</span>:</h2>
+
+            <Button>
+                <span>Novo</span>
+            </Button>
+          </AddContact>
+
+        </>
+
+
+        :
+        <PrincipalTitle>Olá,</PrincipalTitle>
+      }
+      
+      <Modal>
+        <form onSubmit={handleSubmit}>
+            <InputGroup>
+              <label for="name">
+                Nome:
+              </label>
+              <input 
+                type="text" id="name" name="Name"value={name} onChange={(e) => setName(e.target.value)}
+              />
+            </InputGroup>
+
+            <InputGroup>
+              <label for="email">
+                E-mail:
+              </label>
+              <input 
+                type="email" id="email" name="Email"value={email} onChange={(e) => setEmail(e.target.value)}
+              />
+            </InputGroup>
+
+            <InputGroup>
+              <label for="phone">
+                Celular:
+              </label>
+              <input 
+                type="tel" id="phone" name="Phone"value={phone} onChange={(e) => setPhone(e.target.value)}
+              />
+            </InputGroup>
+
+<PublicContactInput>
+            <input 
+              type="checkbox" name="Type"checked={type} onChange={(e) => setType(e.target.checked)}
+            />
+            <span>O contato é público</span>
+            </PublicContactInput>
+
+            <Button>
+              <input type="submit" value="Adicionar"/>
+            </Button>
+            
+          </form>
+      </Modal>
+
+      <ContactsContainer>
         {contactsView && contactsView.map(contact =>{
           return(
-            <li key={contact.id} onClick={() => { deleteContact(contact.id) }}>
-              <p>{contact.name}</p>
-              <p>{contact.email}</p>
-              <p>{contact.phone}</p>
-            </li>
+
+            <Contact 
+              id={contact.id} 
+              name={contact.name}
+              email={contact.email}
+              phone={contact.phone}
+              />
           );
         })}
-      </ul>
-    </>
+      </ContactsContainer>
+    </ContainerInside>
   );
 }
 

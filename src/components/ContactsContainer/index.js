@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Container } from './styles';
 
-const ContainerInside = (props) => {
+const ContactsContainer = (props) => {
   return (
     <Container>
       {props.children}
@@ -10,4 +10,4 @@ const ContainerInside = (props) => {
   );
 }
 
-export default ContainerInside;
+export default ContactsContainer;
