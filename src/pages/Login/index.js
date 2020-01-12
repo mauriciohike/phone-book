@@ -1,7 +1,17 @@
 import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import { UserContext } from '../../contexts/UserContext';
 import { toast } from 'react-toastify';
 import { UserListContext } from '../../contexts/UserListContext';
+
+import ContainerOutside from '../../layouts/ContainerOutside';
+import InputGroup from '../../components/InputGroup';
+import PrincipalTitle from '../../components/PrincipalTitle';
+import Button from '../../components/Button';
+
+import { CallToPage } from './styles';
+
 
 
 const Login = ({ history }) => {
@@ -45,22 +55,52 @@ const Login = ({ history }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input 
-        type="email"
-        value={email}
-        name="email" 
-        onChange={(e) => setEmail(e.target.value)}
-        />
+    <ContainerOutside>
 
-      <input 
-        type="password"
-        name="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        />
-      <input type="submit" value="Login"/>
-    </form>
+      <PrincipalTitle>Acesse agora a sua <span>agenda telefônica</span>:</PrincipalTitle>
+
+      <form onSubmit={handleSubmit}>
+
+        <InputGroup>
+          <label for="email">
+            E-mail:
+          </label>
+          <input 
+            type="email"
+            value={email}
+            name="email"
+            id="email"
+            onChange={(e) => setEmail(e.target.value)}
+            />
+        </InputGroup>
+
+        <InputGroup>
+          <label for="password">
+            Senha:
+          </label>
+          <input 
+            type="password"
+            name="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            />
+            </InputGroup>
+
+          <Button>
+            <input type="submit" value="Entrar"/>
+          </Button>
+
+          
+
+      </form>
+      <CallToPage>
+            Não tem cadastro ainda?
+            <Link to="/register">
+              <span> clique aqui!</span>
+            </Link>
+          </CallToPage>
+    </ContainerOutside>
   );
 }
 
