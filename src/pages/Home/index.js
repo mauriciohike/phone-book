@@ -41,8 +41,8 @@ const Home = () => {
     if(name && email && phone){
       const phoneExist = contactList.find(contact => contact.phone === phone);
       const contactExist = contactList.find(contact => contact.name === name);
-      
-      if(!phoneExist || !contactExist){
+
+      if(!phoneExist && !contactExist){
 
         dispatch({
           type: 'ADD_CONTACT',
