@@ -39,9 +39,10 @@ const Home = () => {
     e.preventDefault();
 
     if(name && email && phone){
-      const contactExist = contactList.find(contact => contact.phone === phone);
-
-      if(!contactExist){
+      const phoneExist = contactList.find(contact => contact.phone === phone);
+      const contactExist = contactList.find(contact => contact.name === name);
+      
+      if(!phoneExist || !contactExist){
 
         dispatch({
           type: 'ADD_CONTACT',
